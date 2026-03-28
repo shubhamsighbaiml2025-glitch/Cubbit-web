@@ -20,7 +20,8 @@ import {
   Menu,
   X,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Users
 } from 'lucide-react';
 
 type Page = 'home' | 'features' | 'about' | 'support';
@@ -30,6 +31,7 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [showCommunityBanner, setShowCommunityBanner] = useState(true);
 
   const handleAndroidDownload = () => {
     setIsDownloading(true);
@@ -193,6 +195,47 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#030303] text-white font-sans selection:bg-pink-500/30 overflow-x-hidden">
+      {/* Community Banner */}
+      <AnimatePresence>
+        {showCommunityBanner && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="relative w-full bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 py-4 px-6 shadow-lg shadow-purple-500/20 z-50"
+          >
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3 flex-1">
+                <Users className="w-5 h-5 flex-shrink-0 text-white" />
+                <div className="flex-1">
+                  <p className="font-bold text-sm md:text-base"><span className="text-white">Join our Community</span> at <span className="underline">Haridwar University</span></p>
+                  <p className="text-xs text-white/80">Connect with students, faculty, and explore opportunities</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.open('', '_blank')}
+                  className="bg-white text-purple-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-100 transition-colors flex items-center gap-2 whitespace-nowrap"
+                >
+                  Join Now <ArrowRight className="w-4 h-4" />
+                </motion.button>
+                
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  onClick={() => setShowCommunityBanner(false)}
+                  className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Animated Background Blobs */}
       <div className="fixed inset-0 overflow-hidden -z-10">
         <motion.div 
